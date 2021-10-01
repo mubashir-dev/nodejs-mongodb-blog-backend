@@ -9,10 +9,8 @@ const auth = require("../middlewares/jwt.auth");
 //register user
 exports.register = [
     body("name", "Name must not be empty.").isLength({ min: 5 }).trim(),
-    body("password", "Password must not be empty.").isLength({ min: 6 }).trim().withMessage("Password must be at least 6 characters").trim(),
+    body("password", "Password must not be empty.").isLength({ min: 6 }).trim(),
     check('confirmPassword').trim()
-        .isLength({ min: 4, max: 16 })
-        .withMessage('Password must be between 4 to 16 characters')
         .custom(async (confirmPassword, { req }) => {
             const password = req.body.password
             if (password !== confirmPassword) {
