@@ -163,5 +163,5 @@ exports.delete = [auth,
                 message: error.message
             }))
         }
-    };
+    }
 ]

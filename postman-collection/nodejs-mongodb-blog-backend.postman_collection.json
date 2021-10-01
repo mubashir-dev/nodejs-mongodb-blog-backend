@@ -1,0 +1,484 @@
+{
+	"info": {
+		"_postman_id": "eb5c4462-cd8a-4ef4-b617-30ee1fcbd519",
+		"name": "nodejs-mongodb-blog-backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "jhon@gamil.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "252525",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Jhon Doe",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test@gamil.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "confirmPassword",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "test-user",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MzNkZWViYjRiMjNiMzhjZDcwNzkiLCJuYW1lIjoiSmhvbiBEb2UiLCJlbWFpbCI6Impob25AZ2FtaWwuY29tIiwidXNlcm5hbWUiOiJqaG9uLTQwNCIsInJvbGUiOiJhZG1pbiIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTYzMzExMTUyMSwiZXhwIjoxNjMzMTE4NzIxfQ.kJBeAkmhY5SNZXdb8gzD05H2dWXNkPknHAgW_fdYxrY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/auth/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MzNkZWViYjRiMjNiMzhjZDcwNzkiLCJuYW1lIjoiSmhvbiBEb2UiLCJlbWFpbCI6Impob25AZ2FtaWwuY29tIiwidXNlcm5hbWUiOiJqaG9uLTQwNCIsInJvbGUiOiJhZG1pbiIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTYzMzExMTUyMSwiZXhwIjoxNjMzMTE4NzIxfQ.kJBeAkmhY5SNZXdb8gzD05H2dWXNkPknHAgW_fdYxrY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/auth/61571da34c0f991a38c22fbf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"61571da34c0f991a38c22fbf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MWRhMzRjMGY5OTFhMzhjMjJmYmYiLCJuYW1lIjpudWxsLCJlbWFpbCI6Im11YmFzaGlyLWRldkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6InNhcmRhci1tdWJhc2hpciIsInJvbGUiOiJhZG1pbiIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTYzMzEwMjQyOSwiZXhwIjoxNjMzMTA5NjI5fQ.rX622XcNHuFWJ6Nw93q-YcGJnV4sDJP7BL2jZmUPFZ4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Sardar Mubashir Ali",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "mubashir@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "mubashir-dev",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/update/61571da34c0f991a38c22fbf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"update",
+								"61571da34c0f991a38c22fbf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MzNkZWViYjRiMjNiMzhjZDcwNzkiLCJuYW1lIjoiSmhvbiBEb2UiLCJlbWFpbCI6Impob25AZ2FtaWwuY29tIiwidXNlcm5hbWUiOiJqaG9uLTQwNCIsInJvbGUiOiJ1c2VyIiwic3RhdHVzIjoiQWN0aXZlIiwiaWF0IjoxNjMzMTA0ODcyLCJleHAiOjE2MzMxMTIwNzJ9.kYf76QZvpiLwpqEY-_cHrcvemb0rZ6-3zB21QF4tCvo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "252525",
+									"type": "text"
+								},
+								{
+									"key": "confirmPassword",
+									"value": "252525",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/changePassword/615733deebb4b23b38cd7079",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"changePassword",
+								"615733deebb4b23b38cd7079"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MzNkZWViYjRiMjNiMzhjZDcwNzkiLCJuYW1lIjoiSmhvbiBEb2UiLCJlbWFpbCI6Impob25AZ2FtaWwuY29tIiwidXNlcm5hbWUiOiJqaG9uLTQwNCIsInJvbGUiOiJhZG1pbiIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTYzMzEwNjk3MSwiZXhwIjoxNjMzMTE0MTcxfQ.wCVI9lnokrVLwwM5YHr9qOmgqDFtCeY_ZFRuj-UDPfo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/auth/deactivate/61574ada92b0134118b0adc7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"deactivate",
+								"61574ada92b0134118b0adc7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activate Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MzNkZWViYjRiMjNiMzhjZDcwNzkiLCJuYW1lIjoiSmhvbiBEb2UiLCJlbWFpbCI6Impob25AZ2FtaWwuY29tIiwidXNlcm5hbWUiOiJqaG9uLTQwNCIsInJvbGUiOiJhZG1pbiIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTYzMzExMDk1NCwiZXhwIjoxNjMzMTE4MTU0fQ.lloqcRwqJW0DjMWbcbMFipfB6LQGr1b89rLRKTtvaG8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/auth/activate/61574ada92b0134118b0adc7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"activate",
+								"61574ada92b0134118b0adc7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post Category",
+			"item": [
+				{
+					"name": "Create Post Creategory",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MzNkZWViYjRiMjNiMzhjZDcwNzkiLCJuYW1lIjoiSmhvbiBEb2UiLCJlbWFpbCI6Impob25AZ2FtaWwuY29tIiwidXNlcm5hbWUiOiJqaG9uLTQwNCIsInJvbGUiOiJhZG1pbiIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTYzMzExNzkxNSwiZXhwIjoxNjMzMTI1MTE1fQ.LNypcSCf2tFLH4d1n2rmia49_QuuSJFHqsAmP5VqWEQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/category/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"category",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MzNkZWViYjRiMjNiMzhjZDcwNzkiLCJuYW1lIjoiSmhvbiBEb2UiLCJlbWFpbCI6Impob25AZ2FtaWwuY29tIiwidXNlcm5hbWUiOiJqaG9uLTQwNCIsInJvbGUiOiJhZG1pbiIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTYzMzExNzkxNSwiZXhwIjoxNjMzMTI1MTE1fQ.LNypcSCf2tFLH4d1n2rmia49_QuuSJFHqsAmP5VqWEQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/category/6157672936ef01316c69a198",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"category",
+								"6157672936ef01316c69a198"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Post Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MzNkZWViYjRiMjNiMzhjZDcwNzkiLCJuYW1lIjoiSmhvbiBEb2UiLCJlbWFpbCI6Impob25AZ2FtaWwuY29tIiwidXNlcm5hbWUiOiJqaG9uLTQwNCIsInJvbGUiOiJhZG1pbiIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTYzMzExNzkxNSwiZXhwIjoxNjMzMTI1MTE1fQ.LNypcSCf2tFLH4d1n2rmia49_QuuSJFHqsAmP5VqWEQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "Node js with React.Js and Vue 3 ",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/category/edit/6157672936ef01316c69a198",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"category",
+								"edit",
+								"6157672936ef01316c69a198"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MzNkZWViYjRiMjNiMzhjZDcwNzkiLCJuYW1lIjoiSmhvbiBEb2UiLCJlbWFpbCI6Impob25AZ2FtaWwuY29tIiwidXNlcm5hbWUiOiJqaG9uLTQwNCIsInJvbGUiOiJhZG1pbiIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTYzMzExNzkxNSwiZXhwIjoxNjMzMTI1MTE1fQ.LNypcSCf2tFLH4d1n2rmia49_QuuSJFHqsAmP5VqWEQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/category/6157672936ef01316c69a198",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"category",
+								"6157672936ef01316c69a198"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
