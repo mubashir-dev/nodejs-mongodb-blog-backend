@@ -5,17 +5,20 @@ require('dotenv').config()
 
 //global middlewares
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({
+    extended: true
+}))
 
 //requiring config
 const mongo_connection = require(path.join(__dirname, 'config', 'db'))
 
 //requiring routes
 const UserRoute = require(path.join(__dirname, 'routes', 'auth.route'))
+const PostCategoryRoute = require(path.join(__dirname, 'routes', 'post.category.route'))
 
-
-//User Route
+//Routing
 app.use('/auth', UserRoute)
+app.use('/category', PostCategoryRoute)
 
 
 // 404 Handling
@@ -43,6 +46,3 @@ app.use((err, req, res, next) => {
 app.listen(process.env.PORT, () => {
     console.log(`Your Application is running on PORT ${process.env.PORT}`);
 })
-
-
-

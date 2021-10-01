@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 //PostCategory Schema
 const PostCategorySchema = new Schema({
-    name: {
+    title: {
         type: String,
         require: true
     },
