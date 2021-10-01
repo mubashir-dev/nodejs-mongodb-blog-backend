@@ -83,7 +83,9 @@ exports.login = [
                     next(new httpError(404, 'User is not found in our system'));
                 }
                 //Compare password
-                if (passwordHash.compare(foundUser.password)) {
+                let hashCompare = await passwordHash.compare(req.body.password, foundUser.password);
+
+                if (hashCompare) {
                     //Check if user is active or suspended
                     if (foundUser.status == '1') {
                         let userData = {
@@ -108,9 +110,7 @@ exports.login = [
                         next(new httpError(400, 'Your Account is not activated'));
                     }
                 }
-
-
-                res.status(200).send({ user: foundUser });
+                next(new httpError(401, { message: "Password or Email is not Correct" }));
             }
         }
         catch (error) {
