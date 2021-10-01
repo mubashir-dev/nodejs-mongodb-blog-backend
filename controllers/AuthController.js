@@ -419,5 +419,5 @@ exports.activate = [auth,
 ];
 //logout user
 exports.logout = [
-    
+
 ]
