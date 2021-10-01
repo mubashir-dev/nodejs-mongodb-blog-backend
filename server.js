@@ -15,7 +15,7 @@ const UserRoute = require(path.join(__dirname, 'routes', 'auth.route'))
 
 
 //User Route
-app.use('/auth', ProductRoute)
+app.use('/auth', UserRoute)
 
 
 // 404 Handling
