@@ -165,3 +165,97 @@ exports.delete = [auth,
         }
     }
 ]
+
+//Deactivate post category
+exports.deactivate = [auth,
+    async (req, res, next) => {
+        try {
+            const errors = validationResult(req);
+            if (req.params.id == undefined) {
+                next(new httpError(422, {
+                    message: "Post Category must be specified"
+                }));
+            } else {
+                let user = await User.findOne({
+                    _id: req.params.id
+                });
+                if (user) {
+                    const userData = userData.user(req.headers.authorization);
+                    let result = await PostCategory.findByIdAndUpdate({
+                        _id: req.params.id,
+                        user: userData._id
+                    }, {
+                        status: '0'
+                    });
+                    res.status(200).send({
+                        user: result,
+                        message: "The post category has been deactivated"
+                    });
+                    // if (userData.role == "admin") {
+                    //     let result = await User.findByIdAndUpdate({
+                    //         status: req.params.id
+                    //     }, {
+                    //         status: '0'
+                    //     });
+                    //     res.status(200).send({
+                    //         user: result,
+                    //         message: "The user has been deactivated"
+                    //     });
+                    // } else {
+                    //     res.status(200).send({
+                    //         message: "Permission denied"
+                    //     });
+                    // }
+
+                } else {
+                    res.status(404).send({
+                        message: "The Post Category has not been found"
+                    });
+                }
+            }
+        } catch (error) {
+            next(new httpError(500, {
+                message: error.message
+            }));
+        }
+    }
+];
+//activate post category
+exports.activate = [auth,
+    async (req, res, next) => {
+        try {
+            const errors = validationResult(req);
+            if (req.params.id == undefined) {
+                next(new httpError(422, {
+                    message: "The Post Category id must be specified"
+                }));
+            } else {
+                let user = await User.findOne({
+                    _id: req.params.id
+                });
+                if (user) {
+                    const userData = userData.user(req.headers.authorization);
+                    let result = await PostCategory.findByIdAndUpdate({
+                        _id: req.params.id,
+                        user: userData._id
+                    }, {
+                        status: '1'
+                    });
+                    res.status(200).send({
+                        user: result,
+                        message: "The Post Category has been activated"
+                    });
+
+                } else {
+                    res.status(404).send({
+                        message: "The Post Category has not been found"
+                    });
+                }
+            }
+        } catch (error) {
+            next(new httpError(500, {
+                message: error.message
+            }));
+        }
+    }
+];
