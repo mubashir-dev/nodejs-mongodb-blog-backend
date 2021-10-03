@@ -20,14 +20,14 @@ exports.register = [
         min: 6
     }).trim(),
     check('confirmPassword').trim()
-    .custom(async (confirmPassword, {
-        req
-    }) => {
-        const password = req.body.password
-        if (password !== confirmPassword) {
-            throw new Error('Passwords must be same')
-        }
-    }),
+        .custom(async (confirmPassword, {
+            req
+        }) => {
+            const password = req.body.password
+            if (password !== confirmPassword) {
+                throw new Error('Passwords must be same')
+            }
+        }),
     body("email", "Email must not be empty.").isEmail().trim().custom((value, {
         req
     }) => {
@@ -156,7 +156,9 @@ exports.index = [auth,
         try {
             const user = userData.user(req.headers.authorization);
             if (user.role == 'admin') {
-                const result = await User.find({});
+                const result = await User.find({
+                    status: "1"
+                });
                 res.send({
                     users: result,
                 });
@@ -182,9 +184,19 @@ exports.find = [auth,
                 const result = await User.findOne({
                     _id: req.params.id
                 });
-                res.send({
-                    user: result,
-                });
+                if (result.status == "1") {
+                    res.send({
+                        user: result,
+                    });
+                }
+                else {
+                    res.send({
+                        message: "This Account has been suspended",
+                        user: result,
+
+                    });
+                }
+
             } else {
                 next(new httpError(401, {
                     message: "You don't have permissions to do this"
@@ -263,14 +275,14 @@ exports.changePassword = [auth,
         min: 6
     }).withMessage("Password must be at least 6 characters").trim(),
     check('confirmPassword').trim()
-    .custom(async (confirmPassword, {
-        req
-    }) => {
-        const password = req.body.password
-        if (password !== confirmPassword) {
-            throw new Error('Passwords must be same')
-        }
-    }),
+        .custom(async (confirmPassword, {
+            req
+        }) => {
+            const password = req.body.password
+            if (password !== confirmPassword) {
+                throw new Error('Passwords must be same')
+            }
+        }),
     async (req, res, next) => {
         try {
             const errors = validationResult(req);
