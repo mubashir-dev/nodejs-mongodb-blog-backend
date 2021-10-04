@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express();
 const path = require('path')
+var multer = require('multer');
+var upload = multer();
 require('dotenv').config()
 
 //global middlewares
@@ -8,6 +10,10 @@ app.use(express.json())
 app.use(express.urlencoded({
     extended: true
 }))
+
+
+//Uploads Directory
+app.use("/public", express.static(path.join(__dirname, 'public/uploads')));
 
 //requiring config
 const mongo_connection = require(path.join(__dirname, 'config', 'db'))
