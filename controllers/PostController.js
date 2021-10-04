@@ -12,63 +12,91 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middlewares/jwt.auth");
 const userData = require("../helpers/user");
 
-exports.index = [
-    auth,
-    async (req, res, next) => {
-        try {
-            const authUser = userData.user(req.headers.authorization);
-            const result = await PostCategory.find({
-                user: authUser._id
-            });
-            if (!result) {
-                next(new httpError(200, {
-                    message: 'Record Not Found'
-                }))
-            }
-            res.send({
-                data: result
-            });
-        } catch (error) {
-            next(new httpError(500, {
-                message: error.message
-            }));
-        }
-    }
-]
+//Directory for holding files
+const DIR = './uploads'
 
-exports.find = async (req, res, next) => {
-    try {
-        const authUser = userData.user(req.headers.authorization);
-        if (!ObjectId.isValid(req.params.id)) {
-            next(new httpError(200, {
-                message: 'Passed Post Category Id is invalid '
-            }))
-
-        } else {
-            const result = await PostCategory.findOne({
-                _id: req.params.id,
-                user: authUser._id
-            });
-            if (!result) {
-                next(new httpError(200, {
-                    message: 'Record Not Found'
-                }))
-            }
-            res.send({
-                data: result
-            });
-        }
-    } catch (error) {
-        next(new httpError(500, {
-            message: error.message
-        }));
+//Storage for multer 
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, DIR);
+    },
+    filename: (req, file, cb) => {
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null, fileName)
     }
-};
+});
+
+// exports.index = [
+//     auth,
+//     async (req, res, next) => {
+//         try {
+//             const authUser = userData.user(req.headers.authorization);
+//             const result = await PostCategory.find({
+//                 user: authUser._id
+//             });
+//             if (!result) {
+//                 next(new httpError(200, {
+//                     message: 'Record Not Found'
+//                 }))
+//             }
+//             res.send({
+//                 data: result
+//             });
+//         } catch (error) {
+//             next(new httpError(500, {
+//                 message: error.message
+//             }));
+//         }
+//     }
+// ]
+
+// exports.find = async (req, res, next) => {
+//     try {
+//         const authUser = userData.user(req.headers.authorization);
+//         if (!ObjectId.isValid(req.params.id)) {
+//             next(new httpError(200, {
+//                 message: 'Passed Post Category Id is invalid '
+//             }))
+
+//         } else {
+//             const result = await PostCategory.findOne({
+//                 _id: req.params.id,
+//                 user: authUser._id
+//             });
+//             if (!result) {
+//                 next(new httpError(200, {
+//                     message: 'Record Not Found'
+//                 }))
+//             }
+//             res.send({
+//                 data: result
+//             });
+//         }
+//     } catch (error) {
+//         next(new httpError(500, {
+//             message: error.message
+//         }));
+//     }
+// };
 
 exports.create = [auth,
-    body("title", "Post Category title must be specified.").isLength({
+    body("title", "Post title must be specified.").isLength({
         min: 6
-    }).withMessage("Post Category title must be  at least 6 characters long").trim(),
+    }).withMessage("Post title must be  at least 6 characters long").trim(),
+
+    body("body", "Post Body must be specified.").isLength({
+        min: 6
+    }).trim(),
+    body("tags", "Post Tags must be specified.").isLength({
+        min: 6
+    }).withMessage("Post must be  at least 1 tag").trim(),
+    check('category_id', 'Post Category  Id must be specified')
+        .trim()
+        .isNumeric()
+        .withMessage('Post Category must Id be numeric.')
+        .bail()
+        .withMessage('Invalid Post Category ID.')
+        .bail(), ,
     async function (req, res, next) {
         try {
             const errors = validationResult(req);
@@ -86,7 +114,13 @@ exports.create = [auth,
                 next(new httpError(422, {
                     message: _errors
                 }));
-            } else {
+            }
+            else if (!req.files || Object.keys(req.files).length === 0) {
+                next(new httpError(422, {
+                    message: "Select Image for the post"
+                }));
+            }
+            else {
                 const result = await product.save();
                 res.status(200).send(result);
             }

@@ -21,6 +21,10 @@ const PostSchema = new Schema({
         default: '1',
         require: true
     },
+    tags: {
+        type: Schema.Types.Object,
+        require: true
+    },
     category: {
         type: Schema.Types.ObjectId,
         ref: 'PostCategory'
