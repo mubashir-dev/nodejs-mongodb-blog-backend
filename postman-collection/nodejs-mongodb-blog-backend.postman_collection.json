@@ -393,7 +393,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/category/6157672936ef01316c69a198",
+							"raw": "http://localhost:3000/category/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -401,7 +401,7 @@
 							"port": "3000",
 							"path": [
 								"category",
-								"6157672936ef01316c69a198"
+								""
 							]
 						}
 					},
@@ -473,6 +473,229 @@
 							"path": [
 								"category",
 								"6157672936ef01316c69a198"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Create Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MzNkZWViYjRiMjNiMzhjZDcwNzkiLCJuYW1lIjoiSmhvbiBEb2UiLCJlbWFpbCI6Impob25AZ2FtaWwuY29tIiwidXNlcm5hbWUiOiJqaG9uLTQwNCIsInJvbGUiOiJhZG1pbiIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTYzMzQ0MDgzMSwiZXhwIjoxNjMzNDQ4MDMxfQ.voDGikoo1KqKxeFw4a5fz6UIkEccOBxcJ3zq4ANXngM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "form",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Life at Zaro G",
+									"type": "text"
+								},
+								{
+									"key": "body",
+									"value": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\n",
+									"type": "text"
+								},
+								{
+									"key": "tags",
+									"value": "[science,space,gravity]",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "6157674036ef01316c69a19a",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/dev/Desktop/pizza-images/1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/post/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"post",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MzNkZWViYjRiMjNiMzhjZDcwNzkiLCJuYW1lIjoiSmhvbiBEb2UiLCJlbWFpbCI6Impob25AZ2FtaWwuY29tIiwidXNlcm5hbWUiOiJqaG9uLTQwNCIsInJvbGUiOiJhZG1pbiIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTYzMzQ2NjA3MSwiZXhwIjoxNjMzNDczMjcxfQ.XtUIVY0HQM4-KM7OZPDSbv95YjAkhJM0lzUAWVtrYyE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Life at Mars",
+									"type": "text"
+								},
+								{
+									"key": "body",
+									"value": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\n",
+									"type": "text"
+								},
+								{
+									"key": "tags",
+									"value": "[science,mars]",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/post/edit/615c584c3f2f1a0a543fb088",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"post",
+								"edit",
+								"615c584c3f2f1a0a543fb088"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MzNkZWViYjRiMjNiMzhjZDcwNzkiLCJuYW1lIjoiSmhvbiBEb2UiLCJlbWFpbCI6Impob25AZ2FtaWwuY29tIiwidXNlcm5hbWUiOiJqaG9uLTQwNCIsInJvbGUiOiJhZG1pbiIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTYzMzQ0MDgzMSwiZXhwIjoxNjMzNDQ4MDMxfQ.voDGikoo1KqKxeFw4a5fz6UIkEccOBxcJ3zq4ANXngM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/post/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"post",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MzNkZWViYjRiMjNiMzhjZDcwNzkiLCJuYW1lIjoiSmhvbiBEb2UiLCJlbWFpbCI6Impob25AZ2FtaWwuY29tIiwidXNlcm5hbWUiOiJqaG9uLTQwNCIsInJvbGUiOiJhZG1pbiIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTYzMzQ0MDgzMSwiZXhwIjoxNjMzNDQ4MDMxfQ.voDGikoo1KqKxeFw4a5fz6UIkEccOBxcJ3zq4ANXngM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/post/615b696f37a4da39e419f69d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"post",
+								"615b696f37a4da39e419f69d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU3MzNkZWViYjRiMjNiMzhjZDcwNzkiLCJuYW1lIjoiSmhvbiBEb2UiLCJlbWFpbCI6Impob25AZ2FtaWwuY29tIiwidXNlcm5hbWUiOiJqaG9uLTQwNCIsInJvbGUiOiJhZG1pbiIsInN0YXR1cyI6IkFjdGl2ZSIsImlhdCI6MTYzMzQ0MDgzMSwiZXhwIjoxNjMzNDQ4MDMxfQ.voDGikoo1KqKxeFw4a5fz6UIkEccOBxcJ3zq4ANXngM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/post/615b66dd9ac4b8139020e760",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"post",
+								"615b66dd9ac4b8139020e760"
 							]
 						}
 					},
