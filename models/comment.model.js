@@ -16,8 +16,8 @@ const CommentSchema = new Schema({
         require: true
     },
     post: {
-        type: String,
-        maxLength: 255,
+        type: Schema.Types.ObjectId,
+        ref: 'PostCategory',
     },
     status: {
         type: String,

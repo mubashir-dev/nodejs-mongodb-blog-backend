@@ -12,59 +12,6 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middlewares/jwt.auth");
 const userData = require("../helpers/user");
 
-// exports.index = [
-//     auth,
-//     async (req, res, next) => {
-//         try {
-//             const authUser = userData.user(req.headers.authorization);
-//             const result = await PostCategory.find({
-//                 user: authUser._id
-//             });
-//             if (!result) {
-//                 next(new httpError(200, {
-//                     message: 'Record Not Found'
-//                 }))
-//             }
-//             res.send({
-//                 data: result
-//             });
-//         } catch (error) {
-//             next(new httpError(500, {
-//                 message: error.message
-//             }));
-//         }
-//     }
-// ]
-
-// exports.find = async (req, res, next) => {
-//     try {
-//         const authUser = userData.user(req.headers.authorization);
-//         if (!ObjectId.isValid(req.params.id)) {
-//             next(new httpError(200, {
-//                 message: 'Passed Post Category Id is invalid '
-//             }))
-
-//         } else {
-//             const result = await PostCategory.findOne({
-//                 _id: req.params.id,
-//                 user: authUser._id
-//             });
-//             if (!result) {
-//                 next(new httpError(200, {
-//                     message: 'Record Not Found'
-//                 }))
-//             }
-//             res.send({
-//                 data: result
-//             });
-//         }
-//     } catch (error) {
-//         next(new httpError(500, {
-//             message: error.message
-//         }));
-//     }
-// };
-
 exports.create = [
     body("email", "Email must not be empty.").isEmail().trim(),
     body("name", "Name must not be empty.").isLength({ min: 6 }).trim(),
@@ -88,7 +35,7 @@ exports.create = [
                     name: req.body.name,
                     email: req.body.email,
                     comment: req.body.comment,
-                    comment: req.body.post_id
+                    post: req.body.post_id
                 });
                 const result = await comment.save();
                 res.status(200).send({ message: "Your Comment has been posted", comment: result });
