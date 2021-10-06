@@ -22,11 +22,13 @@ const mongo_connection = require(path.join(__dirname, 'config', 'db'))
 const UserRoute = require(path.join(__dirname, 'routes', 'auth.route'))
 const PostCategoryRoute = require(path.join(__dirname, 'routes', 'post.category.route'))
 const PostRoute = require(path.join(__dirname, 'routes', 'post.route'))
+const CommentRoute = require(path.join(__dirname, 'routes', 'comment.route'))
 
 //Routing
 app.use('/auth', UserRoute)
 app.use('/category', PostCategoryRoute)
 app.use('/post', PostRoute)
+app.use('/comment', CommentRoute)
 
 
 // 404 Handling
