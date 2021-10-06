@@ -29,6 +29,60 @@ var storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 exports.upload = upload
 
+exports.all = [
+    async (req, res, next) => {
+        try {
+            const result = await Post.aggregate([
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "user",
+                        foreignField: "_id",
+                        pipeline: [
+                            { "$project": { "_id": 1, "username": 1 } },
+                        ],
+                        as: "Author",
+                    }
+                },
+                {
+                    $unwind: "$Author",
+                },
+                {
+                    $lookup: {
+                        from: "postcategories",
+                        localField: "category",
+                        foreignField: "_id",
+                        as: "Category",
+                        pipeline: [
+                            { "$project": { "_id": 1, "title": 1 } },
+                        ],
+
+                    }
+                },
+                {
+                    $unwind: {
+                        path: "$Category",
+                        preserveNullAndEmptyArrays: true
+
+                    }
+                }
+            ]);
+            if (!result) {
+                next(new httpError(200, {
+                    message: 'Record Not Found'
+                }))
+            }
+            res.send({
+                posts: result
+            });
+        } catch (error) {
+            next(new httpError(500, {
+                message: error.message
+            }));
+        }
+    }
+]
+
 exports.index = [
     auth,
     async (req, res, next) => {
@@ -177,7 +231,7 @@ exports.update = [auth,
     async function (req, res, next) {
         const authUser = userData.user(req.headers.authorization);
         if (!ObjectId.isValid(req.params.id)) {
-            next(new httpError(400,'Passed Post Id is invalid'))
+            next(new httpError(400, 'Passed Post Id is invalid'))
         } else {
             const foundPost = await Post.findOne({
                 _id: req.params.id,
@@ -201,8 +255,7 @@ exports.update = [auth,
                     }
                     else {
                         //Checking if the file is present in request
-                        if(req.file)
-                        {
+                        if (req.file) {
                             try {
                                 upload.single('image')
                             }
@@ -218,8 +271,7 @@ exports.update = [auth,
                                 user: authUser._id
                             });
                         }
-                        else
-                        {
+                        else {
                             const Updatedpost = foundPost({
                                 title: req.body.title,
                                 image: "/public/posts/" + req.file.filename,
@@ -229,7 +281,7 @@ exports.update = [auth,
                                 user: authUser._id
                             });
                         }
-                        
+
                         let result = await Updatedpost.update();
                         res.status(200).send({ post: result });
                     }
@@ -289,7 +341,7 @@ exports.deactivate = [auth,
             } else {
                 let post = await Post.findOne({
                     _id: req.params.id,
-                    user:userData._id
+                    user: userData._id
                 });
                 if (user) {
                     let result = await Post.findByIdAndUpdate({
