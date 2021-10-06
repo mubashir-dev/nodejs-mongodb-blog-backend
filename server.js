@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express();
 const path = require('path')
+var multer = require('multer');
+var upload = multer();
 require('dotenv').config()
 
 //global middlewares
@@ -9,16 +11,22 @@ app.use(express.urlencoded({
     extended: true
 }))
 
+
+//Uploads Directory
+app.use("/public", express.static(path.join(__dirname, 'public/uploads')));
+
 //requiring config
 const mongo_connection = require(path.join(__dirname, 'config', 'db'))
 
 //requiring routes
 const UserRoute = require(path.join(__dirname, 'routes', 'auth.route'))
 const PostCategoryRoute = require(path.join(__dirname, 'routes', 'post.category.route'))
+const PostRoute = require(path.join(__dirname, 'routes', 'post.route'))
 
 //Routing
 app.use('/auth', UserRoute)
 app.use('/category', PostCategoryRoute)
+app.use('/post', PostRoute)
 
 
 // 404 Handling
