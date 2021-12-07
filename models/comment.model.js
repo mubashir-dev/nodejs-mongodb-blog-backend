@@ -17,7 +17,7 @@ const CommentSchema = new Schema({
     },
     post: {
         type: Schema.Types.ObjectId,
-        ref: 'PostCategory',
+        ref: 'Post',
     },
     status: {
         type: String,
