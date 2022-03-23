@@ -12,7 +12,7 @@ const passwordHash = require("../helpers/password.hash");
 const jwt = require("jsonwebtoken");
 const auth = require("../middlewares/jwt.auth");
 const userData = require("../helpers/user");
-const { v4: uuidv4 } = require('uuid');
+const {v4: uuidv4} = require('uuid');
 const multer = require('multer');
 const User = require("../models/user.model");
 const PostCategory = require("../models/post.category.model");
@@ -26,47 +26,120 @@ var storage = multer.diskStorage({
     }
 })
 
-const upload = multer({ storage: storage });
+const upload = multer({storage: storage});
 exports.upload = upload
 
-exports.all = [
+exports.all = async (req, res, next) => {
+    try {
+        const result = await User.aggregate([
+            {
+                $lookup: {
+                    from: "posts",
+                    let: {"user_id": "$_id"},
+                    pipeline: [
+                        {$match: {$expr: {$eq: ["$user", "$$user_id"]}}},
+                        {
+                            $lookup: {
+                                from: "comments",
+                                let: {"post_id": "$_id", "createdAt": "comments.createdAt"},
+                                pipeline: [
+                                    {$match: {$expr: {$eq: ["$post", "$$post_id"]}}},
+                                    {
+                                        $addFields: {
+                                            'postedAt': "$createdAt"
+                                        }
+                                    },
+                                    {
+                                        $project: {
+                                            "_id": 0,
+                                            "name": 1,
+                                            "email": 1,
+                                            "comment": 1,
+                                            "postedAt": 1,
+                                        }
+                                    }
+                                ],
+                                as: "comments"
+                            }
+                        }],
+                    as: "posts"
+                },
+            },
+        ]);
+        if (!result) {
+            next(new httpError(200, {
+                message: 'Record Not Found'
+            }))
+        }
+        console.log(result);
+        res.send({
+            201: result
+        });
+    } catch
+        (error) {
+        next(new httpError(500, {
+            message: error.message
+        }));
+    }
+}
+;
+exports.index = [
+    auth,
     async (req, res, next) => {
         try {
+            const authUser = userData.user(req.headers.authorization);
             const result = await Post.aggregate([
                 {
                     $lookup: {
                         from: "users",
                         localField: "user",
                         foreignField: "_id",
-                        pipeline: [
-                            { "$project": { "_id": 1, "username": 1 } },
-                        ],
                         as: "Author",
-                    }
+                        pipeline: [
+                            {
+                                $project: {
+                                    '_id': 1,
+                                    'name': 1,
+                                }
+                            }
+                        ]
+                    },
                 },
                 {
-                    $unwind: "$Author",
+                    $unwind: "$Author"
                 },
                 {
                     $lookup: {
-                        from: "postcategories",
-                        localField: "category",
-                        foreignField: "_id",
-                        as: "Category",
+                        from: "comments",
+                        localField: "_id",
+                        foreignField: "post",
+                        as: "comments",
                         pipeline: [
-                            { "$project": { "_id": 1, "title": 1 } },
-                        ],
-
+                            {
+                                $project: {
+                                    '_id': 1,
+                                    'name': 1,
+                                    'comment': 1,
+                                    'createdAt': 1
+                                }
+                            }
+                        ]
                     }
                 },
                 {
-                    $unwind: {
-                        path: "$Category",
-                        preserveNullAndEmptyArrays: true
+                    $project: {
+                        '_id': 1,
+                        'title': 1,
+                        'Author By': "$Author.name",
+                        "image": {$ifNull: [{$concat: [req.get('Host'), '$image']}, "N/A"]},
+                        'body': 1,
+                        'Comments': "$comments",
+                        'createdAt': 1,
+                        'updatedAt': 1,
 
                     }
                 }
-            ]);
+            ])
             if (!result) {
                 next(new httpError(200, {
                     message: 'Record Not Found'
@@ -82,31 +155,6 @@ exports.all = [
         }
     }
 ]
-
-exports.index = [
-    auth,
-    async (req, res, next) => {
-        try {
-            const authUser = userData.user(req.headers.authorization);
-            const result = await Post.find({
-                user: authUser._id
-            });
-            if (!result) {
-                next(new httpError(200, {
-                    message: 'Record Not Found'
-                }))
-            }
-            res.send({
-                data: result
-            });
-        } catch (error) {
-            next(new httpError(500, {
-                message: error.message
-            }));
-        }
-    }
-]
-
 exports.find = [auth, async (req, res, next) => {
     try {
         const authUser = userData.user(req.headers.authorization);
@@ -136,7 +184,6 @@ exports.find = [auth, async (req, res, next) => {
     }
 }
 ];
-
 exports.create = [auth,
     body("title", "Post title must be specified.").isLength({
         min: 6
@@ -150,17 +197,17 @@ exports.create = [auth,
     }),
     body('category_id', 'Post Category  Id must be specified')
         .trim().custom((value, {
-            req
-        }) => {
+        req
+    }) => {
 
-            return PostCategory.findOne({
-                _id: ObjectID(req.body.category_id)
-            }).then(PostCategory => {
-                if (!PostCategory) {
-                    return Promise.reject("Post Category has not been found.");
-                }
-            });
-        }),
+        return PostCategory.findOne({
+            _id: ObjectID(req.body.category_id)
+        }).then(PostCategory => {
+            if (!PostCategory) {
+                return Promise.reject("Post Category has not been found.");
+            }
+        });
+    }),
     async function (req, res, next) {
         try {
             const errors = validationResult(req);
@@ -173,18 +220,15 @@ exports.create = [auth,
                 next(new httpError(422, {
                     message: _errors
                 }));
-            }
-            else if (!req.file) {
+            } else if (!req.file) {
                 next(new httpError(422, {
                     message: "Select Image for the post"
                 }));
-            }
-            else {
+            } else {
                 //upload file
                 try {
                     upload.single('image')
-                }
-                catch (err) {
+                } catch (err) {
                     console.log("Error has occured while uploading file");
                 }
                 const post = new Post({
@@ -196,7 +240,7 @@ exports.create = [auth,
                     user: authUser._id
                 });
                 let result = await post.save();
-                res.status(200).send({ post: result });
+                res.status(200).send({post: result});
             }
         } catch (error) {
             next(new httpError(500, {
@@ -218,16 +262,16 @@ exports.update = [auth,
     }),
     body('category_id', 'Post Category  Id must be specified')
         .trim().custom((value, {
-            req
-        }) => {
-            return PostCategory.findOne({
-                _id: ObjectID(req.body.category_id)
-            }).then(PostCategory => {
-                if (!PostCategory) {
-                    return Promise.reject("Post Category has not been found.");
-                }
-            });
-        }),
+        req
+    }) => {
+        return PostCategory.findOne({
+            _id: ObjectID(req.body.category_id)
+        }).then(PostCategory => {
+            if (!PostCategory) {
+                return Promise.reject("Post Category has not been found.");
+            }
+        });
+    }),
     async function (req, res, next) {
         const authUser = userData.user(req.headers.authorization);
         if (!ObjectId.isValid(req.params.id)) {
@@ -239,8 +283,7 @@ exports.update = [auth,
             });
             if (!foundPost) {
                 next(new httpError(404, 'Post not found against this ID'));
-            }
-            else {
+            } else {
                 try {
                     const errors = validationResult(req);
                     const authUser = userData.user(req.headers.authorization);
@@ -252,14 +295,12 @@ exports.update = [auth,
                         next(new httpError(422, {
                             message: _errors
                         }));
-                    }
-                    else {
+                    } else {
                         //Checking if the file is present in request
                         if (req.file) {
                             try {
                                 upload.single('image')
-                            }
-                            catch (err) {
+                            } catch (err) {
                                 console.log("Error has occured while uploading file");
                             }
                             const Updatedpost = foundPost({
@@ -270,8 +311,7 @@ exports.update = [auth,
                                 category: req.body.category_id,
                                 user: authUser._id
                             });
-                        }
-                        else {
+                        } else {
                             const Updatedpost = foundPost({
                                 title: req.body.title,
                                 image: "/public/posts/" + req.file.filename,
@@ -283,7 +323,7 @@ exports.update = [auth,
                         }
 
                         let result = await Updatedpost.update();
-                        res.status(200).send({ post: result });
+                        res.status(200).send({post: result});
                     }
                 } catch (error) {
                     next(new httpError(500, {
@@ -311,8 +351,7 @@ exports.delete = [auth,
                     res.status(404).send({
                         message: 'Post Category has not been deleted'
                     });
-                }
-                else {
+                } else {
                     res.send({
                         message: 'Post Category has been deleted',
                         data: result
@@ -327,8 +366,6 @@ exports.delete = [auth,
         }
     }
 ]
-
-//Deactivate post 
 exports.deactivate = [auth,
     async (req, res, next) => {
         try {
@@ -367,7 +404,6 @@ exports.deactivate = [auth,
         }
     }
 ];
-//activate post
 exports.activate = [auth,
     async (req, res, next) => {
         try {

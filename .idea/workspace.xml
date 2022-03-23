@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="014e02a7-8eb9-4790-83ae-cf5ea80c47d1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/nodejs-mongodb-blog-backend.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/posts/27586b4d-2097-4b27-8387-1930db49af82-1633440845792.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/posts/44f651c1-f35a-4f55-92bb-38ffd748cf35-1633440826019.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/posts/6bcad368-5cf8-4bd4-9302-6aac7192a847-1633440865638.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/PostController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/PostController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/comment.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/comment.model.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/post.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/post.route.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,10 +37,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="app.teamhub.trackedBranches" value="vdp99q/Comments,vdp99q/post,vdp99q/PostCategory,vdp99q/main,vdp99q/Postman-Collections,vdp99q/Authentication" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="ReaderModeSettings">
+    <option name="showLigatures" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -55,6 +55,12 @@
       <option name="presentableId" value="Default" />
       <updated>1633440410004</updated>
       <workItem from="1633440410036" duration="631000" />
+      <workItem from="1635277129443" duration="2292000" />
+      <workItem from="1635693165773" duration="613000" />
+      <workItem from="1636470860540" duration="44000" />
+      <workItem from="1638808465183" duration="1168000" />
+      <workItem from="1638810118137" duration="12575000" />
+      <workItem from="1638885202792" duration="4724000" />
     </task>
     <servers />
   </component>
@@ -71,6 +77,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
